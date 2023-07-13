@@ -1,10 +1,9 @@
 const async = require("async");
-const fetchAjax = require('../../lib/fetchAjax');
-const createArray = require('../../lib/createArray');
+const Mock = require("../lib/Mock");
 
 let limit = 4;
 const dynamicLimit = async () => {
-    const numbers = createArray(20);
+    const numbers = Mock.createNumbers(20);
     let runningTask = new Map();
     await async.eachLimit(numbers, limit, (item, callback) => {
         runningTask.set(item, item);
@@ -12,7 +11,7 @@ const dynamicLimit = async () => {
         if (item === 10) {
             limit = 2;
         }
-        fetchAjax(item)
+        Mock.fetchData(item)
             .then(() => {
                 callback();
             })

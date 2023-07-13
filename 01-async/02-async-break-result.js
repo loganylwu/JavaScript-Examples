@@ -1,6 +1,5 @@
-var async = require("async");
-const fetchAjax = require('../../lib/fetchAjax');
-const createArray = require('../../lib/createArray');
+const async = require("async");
+const {fetchData} = require("../lib/Mock");
 
 
 // 并发获取data数据
@@ -9,7 +8,7 @@ const asyncFetchData = async (ref) => {
     const nums = [1, 2, -1, -2, -3, 10, 11, 12, 13, 14, 15, 16];
     await async.mapLimit(nums, 2, (num, next) => {
         console.log(`迭代到${num}`)
-        fetchAjax(num, 1000)
+        fetchData(num, 1000)
             .then(res => {
                 results.push(res.data);
                 ref.push(res.data);
@@ -34,7 +33,7 @@ const asyncFetchData = async (ref) => {
         result = await asyncFetchData(ref);
     } catch (e) {
         console.log(`result 无法获取到数据`, result);
-        console.log(`错误e获得数据`, e.myData);
-        console.log(ref);
+        console.log(`利用错误e，从中获取数据`, e.myData);
+        console.log(`利用引用，从中获取数据`, ref);
     }
 })()

@@ -1,6 +1,5 @@
-var async = require("async");
-const fetchAjax = require('../../lib/fetchAjax');
-const createArray = require('../../lib/createArray');
+const async = require("async");
+const {fetchAjax} = require("../lib/Mock");
 
 
 // 并发获取data数据

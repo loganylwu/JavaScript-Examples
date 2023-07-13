@@ -1,6 +1,5 @@
 const async = require("async");
-const fetchAjax = require('../../lib/fetchAjax');
-const createArray = require('../../lib/createArray');
+const Mock = require("../lib/Mock");
 
 
 const dynamicLimitConfig = (limit) => {
@@ -35,15 +34,18 @@ const dynamicLimitConfig = (limit) => {
 const {proxyLimit, updateLimit} = dynamicLimitConfig(3);
 
 const dynamicLimit = async () => {
-    const numbers = createArray(20);
+    const numbers = Mock.createNumbers(20);
     let runningTask = new Map();
     await async.eachLimit(numbers, proxyLimit, (item, callback) => {
         runningTask.set(item, item);
         // ---------- 在item为10的时候，修改limit的值 -----------
-        if (item === 10) {
+        if (item === 5) {
             updateLimit(4)
         }
-        fetchAjax(item)
+        if (item === 10) {
+            updateLimit(2)
+        }
+        Mock.fetchData(item)
             .then(() => {
                 callback();
             })

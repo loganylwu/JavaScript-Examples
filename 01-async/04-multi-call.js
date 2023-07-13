@@ -1,12 +1,11 @@
 const async = require("async");
-const fetchAjax = require('../../lib/fetchAjax');
-const createArray = require('../../lib/createArray');
+const Mock = require("../lib/Mock");
 
 // 并发获取数据
 const asyncFetchData = async (prefix) => {
-    return async.mapLimit(createArray(20), 2, (num, next) => {
+    return async.mapLimit(Mock.createNumbers(20), 2, (num, next) => {
         console.log(`发起调用${prefix}-${num}`)
-        fetchAjax(num, 1000).then(res => {
+        Mock.fetchData(num, 1000).then(res => {
             next();
         });
     })
